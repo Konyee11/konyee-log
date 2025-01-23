@@ -1,6 +1,7 @@
 import { client } from "@/libs/microcms";
-import { syntaxHighlighter } from "@/libs/syntaxHighlighter";
 import dayjs from "dayjs";
+import "@/components/syntaxHighlighter";
+import SyntaxHighlighter from "@/components/syntaxHighlighter";
 
 type Props = {
     id: string;
@@ -20,21 +21,19 @@ const getBlogPost = async (id: string): Promise<Props> => {
 export default async function BlogPostPage({
     params,
 }: {
-    params: Promise<{ id: string }>;
+    params: { id: string };
 }) {
     const { id } = await params;
     const post = await getBlogPost(id);
 
     const formattedDate = dayjs(post.publishedAt).format("YYYY-MM-DD");
 
-    const content = syntaxHighlighter(post.body);
-
     return (
         <main className="prose lg:prose-lg mx-auto px-5 py-5">
             <h1>{post.title}</h1>
             <div className="text-gray-500">{formattedDate}</div>{" "}
             <div>カテゴリー：{post.category && post.category.name}</div>
-            <article dangerouslySetInnerHTML={{ __html: content }} />
+            <SyntaxHighlighter content={post.body} />
         </main>
     );
 }
