@@ -23,7 +23,7 @@ export default async function BlogPostPage({
 }: {
     params: { id: string };
 }) {
-    const { id } = await params;
+    const { id } = params;
     const post = await getBlogPost(id);
 
     const formattedDate = dayjs(post.publishedAt).format("YYYY-MM-DD");
