@@ -21,9 +21,9 @@ const getBlogPost = async (id: string): Promise<Props> => {
 export default async function BlogPostPage({
     params,
 }: {
-    params: { id: string };
+    params: Promise<{ id: string }>;
 }) {
-    const { id } = params;
+    const { id } = await params;
     const post = await getBlogPost(id);
 
     const formattedDate = dayjs(post.publishedAt).format("YYYY-MM-DD");
