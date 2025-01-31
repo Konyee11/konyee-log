@@ -2,35 +2,35 @@ import { client } from "@/libs/microcms";
 import Link from "next/link";
 
 type Props = {
-    id: string;
-    title: string;
+  id: string;
+  title: string;
 };
 
 const getBlogPosts = async (): Promise<Props[]> => {
-    const data = await client.get({
-        endpoint: "blog",
-        queries: {
-            fields: "id,title",
-            limit: 5,
-        },
-    });
+  const data = await client.get({
+    endpoint: "blog",
+    queries: {
+      fields: "id,title",
+      limit: 5,
+    },
+  });
 
-    return data.contents;
+  return data.contents;
 };
 
 export default async function Home() {
-    const posts = await getBlogPosts();
+  const posts = await getBlogPosts();
 
-    return (
-        <main>
-            <h1>ブログ記事一覧</h1>
-            <ul>
-                {posts.map((post) => (
-                    <li key={post.id}>
-                        <Link href={`/blog/${post.id}`}>{post.title}</Link>
-                    </li>
-                ))}
-            </ul>
-        </main>
-    );
+  return (
+    <main>
+      <h1>ブログ記事一覧</h1>
+      <ul>
+        {posts.map((post) => (
+          <li key={post.id}>
+            <Link href={`/blog/${post.id}`}>{post.title}</Link>
+          </li>
+        ))}
+      </ul>
+    </main>
+  );
 }
